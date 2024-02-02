@@ -2,11 +2,11 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 10;
-  display: inline;
+  display: block;
   text-align: center;
 }
 li {
-  display: inline-block;
+  display: block;
 }
 
 nav {
@@ -14,7 +14,7 @@ nav {
 }
 
 .NavigationBar {
-  display: block;
+  display: inline-block;
   color: blue;
   text-align: center;
   padding: 14px 16px;
@@ -32,4 +32,12 @@ li a:hover {
 }
 body{
   text-align: center;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+th{
+  padding: 5 5 5 5 ;
 }
