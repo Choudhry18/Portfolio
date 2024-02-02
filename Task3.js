@@ -538,33 +538,73 @@ yurtseven,omer    mia  C  9   79   16   27   3    7   5    6   8   23    2   2  
 zeller,cody       mia  C 15  208   37   59   0    2  24   35  25   64   10   3  14   4  33   0    98   0   0   0   2  -48
 zubac,ivica       lac  C 76 2134  326  514   0    2 166  238 236  756   77  29 116  98 219   3   818   0   0   0  76  -33`
 
-let rows = data.trim().split('\n');
-
-let parsedData = [];
-
-// Loop through each row
-for (let row of rows) {
-    // Split the row into individual columns
-    let columns = row.trim().split(/\s+/);
-    parsedData.push(columns);
+function fill_bodyData(){
+    for(let i = 0;i<bodydata.length;i++){
+        const nrow = table.insertRow();
+        bodydata[i].forEach((j) => {
+            const elem = document.createElement('td');
+            elem.textContent = j;
+            nrow.appendChild(elem);
+        })
+    }
 }
+
+function handleclick(){
+    const sortby = this.innerHTML;
+    const index = headings.indexOf(sortby,0);
+    if(sortby===sortval){
+        bodydata.reverse();
+    }else{
+        bodydata.sort(compareFn);
+        sortval = sortby;
+    }
+    while(table.rows.length>1){
+        table.deleteRow(1);
+    }
+    fill_bodyData();
+
+    function compareFn(a,b){
+        if (a[index]>b[index]){
+            return 1;
+        }else if(b[index]>a[index]){
+            return -1;
+        }
+        return 0;
+    }
+}
+let rows = data.trim().split('\n');
+let parsedData = [];
+rows.forEach((row)=>parsedData.push(row.trim().split(/\s+/)));
+
 let headings = [];
-parsedData[0].forEach((i) => headings.push(i));
+headings = parsedData[0];
+let sortval = headings[0]; //Initially the table is sorted by the name which is heading[0]
+let bodydata =  parsedData.splice(1);
+
+//convert the int vals to int 
+for(let i=0;i<bodydata.length;i++){
+    for(let j=0;j<bodydata[i].length;j++){
+        if(!isNaN(parseInt(bodydata[i][j]))){
+            bodydata[i][j] = parseInt(bodydata[i][j]);
+        }
+    }
+}
+
+//making the table element
 const table = document.createElement('table');
+const caption = document.createElement('caption');
+caption.textContent = "All NBA stats 22-23";
+table.caption = caption;
 const thead = table.createTHead();
-const row = thead.insertRow();
+const headRow = thead.insertRow();
 
 headings.forEach((i) => {
     const elem = document.createElement('th');
     elem.textContent = i;
-    row.appendChild(elem);
+    elem.onclick = handleclick;
+    headRow.appendChild(elem);
 })
-for(let i = 1;i<parsedData.length;i++){
-    const nrow = table.insertRow();
-    parsedData[i].forEach((j) => {
-        const elem = document.createElement('td');
-        elem.textContent = j;
-        nrow.appendChild(elem);
-    })
-}
+
+fill_bodyData(bodydata);
+
 document.body.appendChild(table);

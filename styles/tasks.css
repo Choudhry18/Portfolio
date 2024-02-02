@@ -34,10 +34,11 @@ body{
   text-align: center;
 }
 
+th:hover{
+  cursor: pointer;
+}
+
 table, th, td {
   border: 1px solid black;
 }
 
-th{
-  padding: 5 5 5 5 ;
-}
