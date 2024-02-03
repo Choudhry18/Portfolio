@@ -540,12 +540,24 @@ zubac,ivica       lac  C 76 2134  326  514   0    2 166  238 236  756   77  29 1
 
 function fill_bodyData(){
     for(let i = 0;i<bodydata.length;i++){
-        const nrow = table.insertRow();
+        const nrow = tbody.insertRow();
         bodydata[i].forEach((j) => {
             const elem = document.createElement('td');
             elem.textContent = j;
             nrow.appendChild(elem);
         })
+    }
+}
+
+function handlechange(){
+    const valChoosen = this.value;
+    if (['Player', 'Team', 'PS'].includes(valChoosen)){
+        filterInput.type = 'input';
+        console.log("ran")
+    }else{
+        filterInput.type = "range";
+        filterInput.max = 100;
+        filterInput.min = 0;
     }
 }
 
@@ -572,10 +584,10 @@ function handleclick(){
         return 0;
     }
 }
+
 let rows = data.trim().split('\n');
 let parsedData = [];
 rows.forEach((row)=>parsedData.push(row.trim().split(/\s+/)));
-
 let headings = [];
 headings = parsedData[0];
 let sortval = headings[0]; //Initially the table is sorted by the name which is heading[0]
@@ -590,6 +602,13 @@ for(let i=0;i<bodydata.length;i++){
     }
 }
 
+
+const dropdown = document.getElementById('Filterby');
+dropdown.onchange = handlechange;
+const filterInput = document.getElementById("FilterInput");
+
+
+
 //making the table element
 const table = document.createElement('table');
 const caption = document.createElement('caption');
@@ -597,14 +616,19 @@ caption.textContent = "All NBA stats 22-23";
 table.caption = caption;
 const thead = table.createTHead();
 const headRow = thead.insertRow();
+const tbody = table.createTBody();
 
 headings.forEach((i) => {
     const elem = document.createElement('th');
+    const option = document.createElement('option');
+    option.value = i;
+    option.textContent = i
     elem.textContent = i;
+    dropdown.appendChild(option);
     elem.onclick = handleclick;
     headRow.appendChild(elem);
 })
 
 fill_bodyData(bodydata);
-
 document.body.appendChild(table);
+
