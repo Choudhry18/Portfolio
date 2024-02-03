@@ -538,10 +538,10 @@ yurtseven,omer    mia  C  9   79   16   27   3    7   5    6   8   23    2   2  
 zeller,cody       mia  C 15  208   37   59   0    2  24   35  25   64   10   3  14   4  33   0    98   0   0   0   2  -48
 zubac,ivica       lac  C 76 2134  326  514   0    2 166  238 236  756   77  29 116  98 219   3   818   0   0   0  76  -33`
 
-function fill_bodyData(){
-    for(let i = 0;i<bodydata.length;i++){
+function fill_bodyData(arr){
+    for(let i = 0;i<arr.length;i++){
         const nrow = tbody.insertRow();
-        bodydata[i].forEach((j) => {
+        arr[i].forEach((j) => {
             const elem = document.createElement('td');
             elem.textContent = j;
             nrow.appendChild(elem);
@@ -549,31 +549,60 @@ function fill_bodyData(){
     }
 }
 
+function handleInput(){
+    while(table.rows.length>1){
+        table.deleteRow(1);
+    }
+    const index = headings.indexOf(dropdown.value,0);
+    filteredVals = []
+    if(this.type === 'range'){
+        bodydata.forEach((i)=>{
+            if(i[index] >= this.value){
+                filteredVals.push(i) 
+            }
+        })
+    }else{
+        bodydata.forEach((i)=>{
+            if(i[index].toLowerCase().indexOf(this.value.toLowerCase())> -1){
+                filteredVals.push(i);
+            }
+        })
+    }
+    fill_bodyData(filteredVals);
+}
+
 function handlechange(){
     const valChoosen = this.value;
     if (['Player', 'Team', 'PS'].includes(valChoosen)){
         filterInput.type = 'input';
-        console.log("ran")
+        rightval.textContent = "";
+        leftval.textContent = "";
     }else{
         filterInput.type = "range";
-        filterInput.max = 100;
-        filterInput.min = 0;
+        const index = headings.indexOf(valChoosen,0);
+        let arr = []
+        bodydata.forEach((i)=> arr.push(i[index]))
+        filterInput.max = Math.max(...arr);
+        filterInput.min = Math.min(...arr);
+        rightval.textContent = filterInput.max;
+        leftval.textContent = filterInput.min;
     }
+    filterInput.value = null;
 }
 
 function handleclick(){
     const sortby = this.innerHTML;
     const index = headings.indexOf(sortby,0);
     if(sortby===sortval){
-        bodydata.reverse();
+        filteredVals.reverse();
     }else{
-        bodydata.sort(compareFn);
+        filteredVals.sort(compareFn);
         sortval = sortby;
     }
     while(table.rows.length>1){
         table.deleteRow(1);
     }
-    fill_bodyData();
+    fill_bodyData(filteredVals);
 
     function compareFn(a,b){
         if (a[index]>b[index]){
@@ -592,7 +621,10 @@ let headings = [];
 headings = parsedData[0];
 let sortval = headings[0]; //Initially the table is sorted by the name which is heading[0]
 let bodydata =  parsedData.splice(1);
-
+let filteredVals = [];
+bodydata.forEach((i)=>{
+    filteredVals.push(i);
+})
 //convert the int vals to int 
 for(let i=0;i<bodydata.length;i++){
     for(let j=0;j<bodydata[i].length;j++){
@@ -606,6 +638,9 @@ for(let i=0;i<bodydata.length;i++){
 const dropdown = document.getElementById('Filterby');
 dropdown.onchange = handlechange;
 const filterInput = document.getElementById("FilterInput");
+filterInput.onchange = handleInput;
+const leftval = document.getElementById("leftval")
+const rightval = document.getElementById("rightval")
 
 
 
@@ -618,6 +653,7 @@ const thead = table.createTHead();
 const headRow = thead.insertRow();
 const tbody = table.createTBody();
 
+//filling the table head row and options for the dropdown
 headings.forEach((i) => {
     const elem = document.createElement('th');
     const option = document.createElement('option');
