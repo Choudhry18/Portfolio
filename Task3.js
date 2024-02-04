@@ -622,9 +622,7 @@ headings = parsedData[0];
 let sortval = headings[0]; //Initially the table is sorted by the name which is heading[0]
 let bodydata =  parsedData.splice(1);
 let filteredVals = [];
-bodydata.forEach((i)=>{
-    filteredVals.push(i);
-})
+
 //convert the int vals to int 
 for(let i=0;i<bodydata.length;i++){
     for(let j=0;j<bodydata[i].length;j++){
@@ -633,6 +631,10 @@ for(let i=0;i<bodydata.length;i++){
         }
     }
 }
+
+bodydata.forEach((i)=>{
+    filteredVals.push(i);
+})
 
 
 const dropdown = document.getElementById('Filterby');
