@@ -571,7 +571,7 @@ function handleInput(){
     fill_bodyData(filteredVals);
 }
 
-function handlechange(){
+function handleChangeDropdown(){
     const valChoosen = this.value;
     if (['Player', 'Team', 'PS'].includes(valChoosen)){
         filterInput.type = 'input';
@@ -590,9 +590,10 @@ function handlechange(){
     filterInput.value = null;
 }
 
-function handleclick(){
+function handleClickHeading(){
     const sortby = this.innerHTML;
     const index = headings.indexOf(sortby,0);
+    console.log(this)
     if(sortby===sortval){
         filteredVals.reverse();
     }else{
@@ -638,7 +639,7 @@ bodydata.forEach((i)=>{
 
 
 const dropdown = document.getElementById('Filterby');
-dropdown.onchange = handlechange;
+dropdown.onchange = handleChangeDropdown;
 const filterInput = document.getElementById("FilterInput");
 filterInput.onchange = handleInput;
 const leftval = document.getElementById("leftval")
@@ -663,7 +664,7 @@ headings.forEach((i) => {
     option.textContent = i
     elem.textContent = i;
     dropdown.appendChild(option);
-    elem.onclick = handleclick;
+    elem.onclick = handleClickHeading;
     headRow.appendChild(elem);
 })
 
