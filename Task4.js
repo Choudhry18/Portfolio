@@ -96,6 +96,21 @@ function moveTilesUp() {
             grid[counter][j] = 0;
             counter++;
         }
+        counter = 0
+        for(let i=1; i<gridSize; i++){
+            if (grid[counter][j] === grid[i][j]){
+                grid[counter][j] = grid[counter][j] * 2;
+                grid[i][j] = 0;
+                counter++;
+            }else{
+                if(grid[counter][j] === 0){
+                    grid[counter][j] = grid[i][j]
+                    grid[i][j] = 0;
+                }else{
+                    counter++;
+                } 
+            }
+        }
     }
 }
 
@@ -112,6 +127,19 @@ function moveTilesDown() {
         while(counter>=0){
             grid[counter][j] = 0;
             counter--;
+        }
+        counter = gridSize -1;
+        for(let i = gridSize-2; i>=0; i--){
+            if (grid[counter][j] === grid[i][j]){
+                grid[counter][j] = grid[counter][j] * 2;
+                grid[i][j] = 0;
+                counter--;
+            }else{
+                if(grid[counter][j] === 0){
+                    grid[counter][j] = grid[i][j]
+                    grid[i][j] = 0;
+                }else{counter--;}
+            }
         }
     }
 }
@@ -130,6 +158,19 @@ function moveTilesLeft() {
             grid[i][counter] = 0;
             counter++;
         }
+        counter = 0
+        for(let j=1; j<gridSize; j++){
+            if (grid[i][counter] === grid[i][j]){
+                grid[i][counter] = grid[i][counter] * 2;
+                grid[i][j] = 0;
+                counter++;
+            }else{
+                if(grid[i][counter] === 0){
+                    grid[i][counter] = grid[i][j];
+                    grid[i][j] = 0;
+                } else{counter++;}
+            }
+        }
     }
 }
 
@@ -146,6 +187,19 @@ function moveTilesRight() {
         while(counter>=0){
             grid[i][counter] = 0;
             counter--;
+        }
+        counter = gridSize -1;
+        for(let j = gridSize-2; j>=0; j--){
+            if (grid[i][counter] === grid[i][j]){
+                grid[i][counter] = grid[i][counter] * 2;
+                grid[i][j] = 0;
+                counter--;
+            }else{
+                if(grid[i][counter] === 0){
+                    grid[i][counter] = grid[i][j]
+                    grid[i][j] = 0;
+                } else{counter--;}
+            }
         }
     }
 }
