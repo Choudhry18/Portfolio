@@ -48,7 +48,6 @@ function drawGrid() {
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             if (value !== 0) {
-                console.log(value)
                 ctx.fillText(value, x + tileSize / 2, y + tileSize / 2);
             }
         }
@@ -60,7 +59,7 @@ function handleKeyPress(event) {
     switch(event.key){
         case 'ArrowUp':
             moveTilesUp();
-            addNewTile();
+            addNewTile()
             drawGrid();
             break;
         case 'ArrowDown':
@@ -69,7 +68,7 @@ function handleKeyPress(event) {
             drawGrid();
             break;
         case 'ArrowLeft':
-            moveTilesUp();
+            moveTilesLeft();
             addNewTile();
             drawGrid();
             break;
@@ -85,22 +84,70 @@ function handleKeyPress(event) {
 
 // Move tiles up
 function moveTilesUp() {
-    // Implementation of moving tiles up
+    for(let j = 0; j<gridSize; j++){
+        let counter = 0;
+        for(let i = 0; i<gridSize; i++){
+            if (grid[i][j] != 0){
+                grid[counter][j] = grid[i][j];
+                counter++;
+            }
+        }
+        while(counter<gridSize){
+            grid[counter][j] = 0;
+            counter++;
+        }
+    }
 }
 
 // Move tiles down
 function moveTilesDown() {
-    // Implementation of moving tiles down
+    for(let j = 0; j<gridSize; j++){
+        let counter = gridSize-1;
+        for(let i = gridSize-1; i>=0; i--){
+            if (grid[i][j] != 0){
+                grid[counter][j] = grid[i][j];
+                counter--;
+            }
+        }
+        while(counter>=0){
+            grid[counter][j] = 0;
+            counter--;
+        }
+    }
 }
 
 // Move tiles left
 function moveTilesLeft() {
-    // Implementation of moving tiles left
+    for(let i = 0; i<gridSize; i++){
+        let counter = 0;
+        for(let j = 0; j<gridSize; j++){
+            if (grid[i][j] != 0){
+                grid[i][counter] = grid[i][j];
+                counter++;
+            }
+        }
+        while(counter<gridSize){
+            grid[i][counter] = 0;
+            counter++;
+        }
+    }
 }
 
 // Move tiles right
 function moveTilesRight() {
-    // Implementation of moving tiles right
+    for(let i = 0; i<gridSize; i++){
+        let counter = gridSize-1;
+        for(let j = gridSize-1; j>=0; j--){
+            if (grid[i][j] != 0){
+                grid[i][counter] = grid[i][j];
+                counter--;
+            }
+        }
+        while(counter>=0){
+            grid[i][counter] = 0;
+            counter--;
+        }
+    }
 }
 
 // Initialize the game
