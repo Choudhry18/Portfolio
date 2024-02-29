@@ -43,11 +43,12 @@ function drawGrid() {
             const y = i * tileSize;
             ctx.fillStyle = value === 0 ? '#9e948a' : `#${value.toString(16)}`;
             ctx.fillRect(x, y, tileSize, tileSize);
-            ctx.fillStyle = '#000000';
+            ctx.fillStyle = '#3232';
             ctx.font = 'bold 24px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             if (value !== 0) {
+                console.log(value)
                 ctx.fillText(value, x + tileSize / 2, y + tileSize / 2);
             }
         }
