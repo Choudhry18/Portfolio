@@ -62,50 +62,61 @@
         .project-box {
             width: 200px;
             height: 200px;
-            background-color: #444;
             margin: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 10px;
+            position: relative;
             transition: transform 0.3s ease;
+            background-size: cover;
+            background-position: center;
         }
 
         .project-box:hover {
             transform: scale(1.05);
-            background-color: #555;
         }
 
         .project-box a {
+            position: absolute;
+            bottom: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 15px;
+            border-radius: 5px;
             color: #f5f5f5;
             text-decoration: none;
             font-size: 18px;
             font-weight: bold;
         }
+
+        .project-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
-
-
 
     <h1>Choudhry Abdullah's Web Portfolio</h1>
 
     <div class="about-me">
         <h2>About Me</h2>
-        <p>Hello! I'm Choudhry Abdullah, a passionate Software Engineer passionaite for building Full Stack Application and Machine Learning.</p>
+        <p>Hello! I'm Choudhry Abdullah, a passionate Software Engineer with a focus on building Full Stack Applications and exploring Machine Learning.</p>
     </div>
 
     <div class="projects">
-		<div class="project-box">
-            <a href='Task3.html'>Pothole Analysis</a>
+        <div class="project-box" style="background-image: url('pothole_analysis.jpg');">
+            <a href='https://dashboard-eight-kohl.vercel.app/Forecast'>Pothole Analysis</a>
         </div>
-		<div class="project-box">
+        <div class="project-box" style="background-image: url('british_programming.jpg');">
             <a href='Task3.html'>British Programming</a>
         </div>
-        <div class="project-box">
+        <div class="project-box" style="background-image: url('nba_statistics.jpg');">
             <a href='Task3.html'>NBA Statistics</a>
         </div>
-        <div class="project-box">
+        <div class="project-box" style="background-image: url('2048_game.jpg');">
             <a href='Task4.html'>2048 Game</a>
         </div>
     </div>
